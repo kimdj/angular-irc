@@ -1,0 +1,65 @@
+<div class="container-fluid d-flex h-100 flex-column">
+  <div class="row flex-fill d-flex justify-content-start">
+    <div class="col-8">
+      <mat-list>
+        <mat-list-item *ngFor="let message of messages"
+          [ngClass]="[(message.action === undefined && message.from.id === user.id)? 'chat-list-item': '']">
+          <h4 mat-line
+            *ngIf="message.action === undefined">
+            <b>{{message.from.name}}</b>
+          </h4>
+          <p mat-line
+            *ngIf="message.action === undefined">
+            <span> {{message.content}} </span>
+          </p>
+          <p mat-line
+            *ngIf="message.action === action.JOINED"
+            class="chat-notification">
+            <span> <b>{{message.from.name}}</b> joined to the conversation. </span>
+          </p>
+          <p mat-line
+            *ngIf="message.action === action.RENAME"
+            class="chat-notification">
+            <span> <b>{{message.content.previousUsername}}</b> is now <b>{{message.content.username}}</b>
+            </span>
+          </p>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    <div class="col-4"
+      style="background-color: rgb(242, 242, 242)">
+      <mat-list>
+        <mat-list-item>
+          Current Room: {{ currentSocketId }}
+        </mat-list-item>
+        <mat-list-item *ngFor="let member of members">
+          {{ member }}
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col ml-5">
+      <mat-form-field class="chat-input">
+        <input matInput
+          #inputMessage
+          maxlength="100"
+          placeholder="{{'Type your message'}}"
+          [(ngModel)]="messageContent"
+          (keyup.enter)="sendMessage(messageContent)">
+        <mat-hint align="end">{{inputMessage.value.length}}/100</mat-hint>
+      </mat-form-field>
+      <button *ngIf="currentSocketId && currentSocketId !== 'Default Room'"
+        mat-flat-button
+        (click)="leaveRoom()">
+        <span mat-line>Leave {{ currentSocketId }}</span>
+      </button>
+      <!-- <button mat-flat-button
+      class="ml-5"
+        (click)="test()">
+        <span mat-line>TEST</span>
+      </button> -->
+    </div>
+  </div>
+</div>

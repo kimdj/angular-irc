@@ -1,0 +1,17 @@
+.mat-dialog-content {
+    overflow: hidden;
+}
+
+.button-globe {
+    float: right;
+    margin-top: -5px;
+}
+
+.dialog-title {
+    float: left;
+    padding-left: 15px;
+}
+
+.dialog-content {
+    float: left;
+}
